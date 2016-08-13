@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_title"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/set_title_top_margin"
+        android:layout_centerHorizontal="true"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        >
+
+        <TextView
+            android:id="@+id/lable_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/set_lable_left_margin"
+
+            android:text="@string/set_lable_new_pwd"
+            />
+        <TextView
+            android:id="@+id/lable_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lable_new"
+            android:layout_alignLeft="@id/lable_new"
+            android:layout_marginTop="@dimen/set_lable_top_margin"
+            android:text="@string/set_lable_check_pwd"
+            />
+        <EditText
+            android:id="@+id/pwd_check"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_toRightOf="@+id/lable_check"
+            android:layout_alignBottom="@id/lable_check"
+            android:hint="@string/edit_hint"
+            android:background="#55808080"
+            />
+        <EditText
+            android:id="@+id/pwd_new"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_alignLeft="@+id/pwd_check"
+            android:layout_alignBottom="@id/lable_new"
+            android:hint="@string/edit_hint"
+            android:background="#55808080"
+            />
+
+        <TextView
+            android:id="@+id/checkerr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pwd_check"
+            android:layout_marginTop="@dimen/set_lable_top_margin"
+            android:layout_centerHorizontal="true"
+            android:text="@string/set_check_error"
+            android:visibility="visible"
+            />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/commit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/set_commit_bottom_margin"
+        android:text="@string/btn_commit"
+        />
+</RelativeLayout>

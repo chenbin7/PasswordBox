@@ -1,0 +1,59 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="edittext_width">120dp</dimen>
+    <dimen name="edittext_height">25dp</dimen>
+    <dimen name="btn_cc_margin">30dp</dimen>
+    //loging
+    <dimen name="login_title_top_margin">50dp</dimen>
+    <dimen name="login_lable_left_margin">30dp</dimen>
+    <dimen name="login_pwderr_top_margin">15dp</dimen>
+    <dimen name="login_commit_bottom_margin">40dp</dimen>
+
+    //set_new_pwd
+    <dimen name="set_title_top_margin">50dp</dimen>
+    <dimen name="set_lable_left_margin">30dp</dimen>
+    <dimen name="set_lable_top_margin">15dp</dimen>
+    <dimen name="set_commit_bottom_margin">40dp</dimen>
+
+    //change_pwd
+    <dimen name="change_title_top_margin">50dp</dimen>
+    <dimen name="change_lable_left_margin">30dp</dimen>
+    <dimen name="change_lable_top_margin">15dp</dimen>
+    <dimen name="change_commit_bottom_margin">40dp</dimen>
+
+    //add_type
+    <dimen name="type_add_width">240dp</dimen>
+    <dimen name="type_add_height">100dp</dimen>
+    <dimen name="type_add_title_top_margin">30dp</dimen>
+    <dimen name="type_add_name_left_margin">15dp</dimen>
+    <dimen name="type_add_btn_bottom_margin">20dp</dimen>
+
+    //add_pwd
+    <dimen name="pwd_add_width">240dp</dimen>
+    <dimen name="pwd_add_height">150dp</dimen>
+    <dimen name="pwd_add_title_top_margin">30dp</dimen>
+    <dimen name="pwd_add_name_left_margin">15dp</dimen>
+    <dimen name="pwd_add_top_margin">15dp</dimen>
+    <dimen name="pwd_add_btn_bottom_margin">20dp</dimen>
+
+    //pwd_setting
+    <dimen name="setting_width">240dp</dimen>
+    <dimen name="setting_height">150dp</dimen>
+    <dimen name="setting_content_margin">10dp</dimen>
+    <dimen name="setting_title_top_margin">30dp</dimen>
+    <dimen name="setting_left_margin">15dp</dimen>
+    <dimen name="setting_top_margin">15dp</dimen>
+    <dimen name="setting_btn_bottom_margin">20dp</dimen>
+
+    //clear_all_pwd
+    <dimen name="clear_all_width">240dp</dimen>
+    <dimen name="clear_all_height">100dp</dimen>
+    <dimen name="clear_all_title_top_margin">30dp</dimen>
+    <dimen name="clear_all_pwd_left_margin">15dp</dimen>
+    <dimen name="clear_all_btn_bottom_margin">20dp</dimen>
+
+    //main
+    <dimen name="main_margin_lr">10dp</dimen>
+</resources>

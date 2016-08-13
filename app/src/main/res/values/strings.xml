@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">PasswdBox</string>
+    <string name="edit_hint">请在此输入</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_commit">确认</string>
+    //login
+    <string name="login_inputpwd">请输入密码</string>
+    <string name="login_pwderror">密码错误！请重新输入！</string>
+    <string name="login_lablepwd">密码：</string>
+    <string name="login_lablepwddefault">请在此输入密码</string>
+
+    //set_login_pwd
+    <string name="set_title">请设置密码</string>
+    <string name="set_lable_new_pwd">密码：</string>
+    <string name="set_lable_check_pwd">确认密码：</string>
+    <string name="set_check_error">密码不一致！请重新输入！</string>
+
+    //change_login_pwd
+    <string name="change_title">修改密码</string>
+    <string name="change_lable_old_pwd">原密码：</string>
+    <string name="change_lable_new_pwd">密码：</string>
+    <string name="change_lable_check_pwd">确认密码：</string>
+    <string name="change_oldpwd_error">原密码错误！请重新输入！</string>
+    <string name="change_check_error">密码不一致！请重新输入！</string>
+
+    //add_type
+    <string name="type_add_title">新建密码类</string>
+    <string name="type_add_name">名称：</string>
+
+    //add_pwd
+    <string name="pwd_add_title">新增密码</string>
+    <string name="pwd_add_lable_type">类别：</string>
+    <string name="pwd_add_lable_name">名称：</string>
+    <string name="pwd_add_lable_pwd">密码：</string>
+    
+    //clear_setting
+    <string name="setting_title">密码清除设置</string>
+    <string name="setting_content">多次错误密码输入次数后，直接清除所有密码有助于保护您的密码安全</string>
+    <string name="setting_garbled_mode">密码错误时显示乱码</string>
+    <string name="setting_clear_mode">启动安全清除保障</string>
+    <string name="setting_err_times">次后清除所有密码</string>
+
+    //clear_all_pwd
+    <string name="clear_all_title">清除所有密码</string>
+    <string name="clear_all_pwd">密码：</string>
+
+    //main
+    <string name="main_add_type">add</string>
+    <string name="main_seting">setting</string>
+    <string name="main_add_pwd">Add Password</string>
+
+</resources>

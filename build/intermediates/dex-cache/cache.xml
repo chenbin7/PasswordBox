@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/chenbin/github/PasswordBox/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="/home/chenbin/github/PasswordBox/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.0.0_3a781463a94e411e9233caaf9f9ba9e7ef87506c.jar" />
+    </item>
+    <item
+        jar="/home/chenbin/github/PasswordBox/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="/home/chenbin/github/PasswordBox/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0_873a9303196f6583cf809997ae09ed3abd2341f0.jar" />
+    </item>
+    <item
+        jar="/home/chenbin/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/24.0.0/2943c74db6d4346ab8c6531adac91fa05c137c40/support-annotations-24.0.0.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="/home/chenbin/github/PasswordBox/app/build/intermediates/pre-dexed/debug/support-annotations-24.0.0_208671cd39e7618fee32804799a9b12d0984485a.jar" />
+    </item>
+    <item
+        jar="/home/chenbin/github/PasswordBox/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="0874286cc2fd88d54fdf130e9d5372730da6de97">
+        <dex dex="/home/chenbin/github/PasswordBox/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-24.0.0_e930132d272f3af8b2cf60899e1f911bc81c76b8.jar" />
+    </item>
+    <item
+        jar="/home/chenbin/github/PasswordBox/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="e70f608219ed6b974644c333249ab2bb7b71de98">
+        <dex dex="/home/chenbin/github/PasswordBox/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-24.0.0_e3b72f9b15adcd8e9eeb5459d52dd7e8c4d26b9d.jar" />
+    </item>
+    <item
+        jar="/home/chenbin/github/PasswordBox/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="894922f67adeaaef51f077a29e315da21a3382d3">
+        <dex dex="/home/chenbin/github/PasswordBox/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-24.0.0_0d287a0119d93816445dee8dab733dc9789336f8.jar" />
+    </item>
+    <item
+        jar="/home/chenbin/github/PasswordBox/app/src/main/lib/commons-codec-1.8.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="af3be3f74d25fc5163b54f56a0d394b462dafafd">
+        <dex dex="/home/chenbin/github/PasswordBox/app/build/intermediates/pre-dexed/debug/commons-codec-1.8_699b5bf3f1e896cf7f9b2f988dba5a8de47596ea.jar" />
+    </item>
+    <item
+        jar="/home/chenbin/github/PasswordBox/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="3bd97cfefd783e9de1dd1c30574a6adb44b4409b">
+        <dex dex="/home/chenbin/github/PasswordBox/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.0.0_8c82148138ff0969f70546b1e80b7970a4c4397d.jar" />
+    </item>
+
+</items>
