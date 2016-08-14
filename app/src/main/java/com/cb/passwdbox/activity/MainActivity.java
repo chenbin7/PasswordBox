@@ -3,6 +3,7 @@ package com.cb.passwdbox.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,14 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cb.passwdbox.R;
 import com.cb.passwdbox.been.PasswdBeen;
 import com.cb.passwdbox.database.SPUtils;
+import com.cb.passwdbox.presenter.MainPresenter;
+import com.cb.passwdbox.presenter.PresenterFactory;
 
 import java.util.List;
 
@@ -30,6 +34,8 @@ public class MainActivity extends Activity {
     Button addPwdBtn;
     SPUtils utils;
     Context context;
+    MainPresenter presenter;
+//    List<String> type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,22 @@ public class MainActivity extends Activity {
                 Log.d(TAG,"setting");
             }
         });
+
+        addPwdBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"add pwd");
+            }
+        });
+
+    }
+
+    private void init(){
+        presenter = (MainPresenter) PresenterFactory.createPresenter(MainPresenter.class,this);
+        String[] items = presenter.initType();
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(adapter);
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -68,16 +90,11 @@ public class MainActivity extends Activity {
                 Log.d(TAG,"spinner  nothing");
             }
         });
-        addPwdBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG,"add pwd");
-            }
-        });
 
-    }
+        List<PasswdBeen> list = presenter.initPwd();
+        pwdListView.setLayoutManager(new LinearLayoutManager(this));
+        pwdListView.setAdapter(new PwdAdapter(list,this));
 
-    private void init(){
 
     }
 
@@ -98,7 +115,15 @@ public class MainActivity extends Activity {
 
         @Override
         public void onBindViewHolder(PwdViewHolder holder, int position) {
+            PasswdBeen bean = list.get(position);
+            holder.name.setText(bean.getName());
+            holder.pwd.setText(bean.getPasswd());
+            holder.detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                }
+            });
         }
 
         @Override
@@ -111,13 +136,14 @@ public class MainActivity extends Activity {
 
     class PwdViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,pwd,detail;
+        TextView name,pwd;
+        ImageButton detail;
 
         public PwdViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
             pwd = (TextView) view.findViewById(R.id.pwd);
-            detail = (TextView) view.findViewById(R.id.detail);
+            detail = (ImageButton) view.findViewById(R.id.detail);
         }
     }
 
