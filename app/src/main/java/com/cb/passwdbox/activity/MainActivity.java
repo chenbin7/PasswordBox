@@ -2,6 +2,7 @@ package com.cb.passwdbox.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,10 @@ public class MainActivity extends Activity {
     SPUtils utils;
     Context context;
     MainPresenter presenter;
+    private static final int REQUEST_CODE_ADD_TYPE = 1;
+    private static final int REQUEST_CODE_ADD_PWD = 2;
+    private static final int REQUEST_CODE_SETTING = 3;
+
 //    List<String> type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,23 +59,34 @@ public class MainActivity extends Activity {
         addTypeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"add Type");
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,AddTypeActivity.class);
+                startActivityForResult(intent,REQUEST_CODE_ADD_TYPE);
             }
         });
         settingText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"setting");
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,SettingActivity.class);
+                startActivityForResult(intent,REQUEST_CODE_SETTING);
             }
         });
 
         addPwdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"add pwd");
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,AddPwdActivity.class);
+                startActivityForResult(intent,REQUEST_CODE_ADD_PWD);
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void init(){
@@ -94,8 +110,6 @@ public class MainActivity extends Activity {
         List<PasswdBeen> list = presenter.initPwd();
         pwdListView.setLayoutManager(new LinearLayoutManager(this));
         pwdListView.setAdapter(new PwdAdapter(list,this));
-
-
     }
 
     //List
