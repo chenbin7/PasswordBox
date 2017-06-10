@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.cb.passwdbox"
@@ -26,3 +26,4 @@ dependencies {
     compile files('src/main/lib/commons-codec-1.8.jar')
     compile 'com.android.support:recyclerview-v7:24.0.0'
 }
+
