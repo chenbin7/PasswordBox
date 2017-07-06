@@ -8,26 +8,41 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/background_color"
-    tools:context=".login.LoginActivity">
+    tools:context=".modifypwd.ModifyPwdActivity"
+    >
 
     <View
-        android:id="@+id/login_base"
+        android:id="@+id/modify_base"
         android:layout_width="0px"
         android:layout_height="0px"
         android:layout_centerInParent="true"
         />
 
     <EditText
-        android:id="@+id/pwd"
+        android:id="@+id/pwd_new"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_height"
         android:inputType="textPassword"
-        android:hint="@string/login_lablepwddefault"
-        android:maxLength="20"
         android:gravity="center"
+        android:hint="@string/set_lable_check_pwd"
+        android:maxLength="20"
         android:background="@null"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/login_base"
+        android:layout_above="@id/modify_base"
+        android:layout_marginBottom="20dp"
+        />
+
+    <EditText
+        android:id="@+id/pwd_check"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:inputType="textPassword"
+        android:gravity="center"
+        android:hint="@string/set_lable_new_pwd"
+        android:maxLength="20"
+        android:background="@null"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/pwd_new"
         android:layout_marginBottom="20dp"
         />
     <Button
@@ -35,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/login_base"
+        android:layout_below="@id/modify_base"
         android:layout_marginTop="10dp"
         android:background="@drawable/login_btn_selector"
         android:text="@string/btn_commit"

@@ -7,15 +7,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginActivity">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FirstLoginActivity"></activity>
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".modifypwd.ModifyPwdActivity"/>
+        <activity android:name=".type.MainActivity"/>
         <activity android:name=".activity.AddTypeActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.AddPwdActivity"/>

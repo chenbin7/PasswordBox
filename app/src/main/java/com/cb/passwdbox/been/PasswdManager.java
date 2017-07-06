@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.cb.passwdbox.database.SQLUtils;
 import com.cb.passwdbox.property.Const;
+import com.cb.passwdbox.type.TypeBeen;
 import com.cb.passwdbox.utils.Utils;
 
 import java.util.ArrayList;

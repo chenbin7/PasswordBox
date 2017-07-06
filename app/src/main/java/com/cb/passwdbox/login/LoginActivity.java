@@ -1,4 +1,4 @@
-package com.cb.passwdbox.activity;
+package com.cb.passwdbox.login;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,76 +6,74 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.cb.passwdbox.R;
+import com.cb.passwdbox.type.MainActivity;
 import com.cb.passwdbox.been.PasswdManager;
+import com.cb.passwdbox.modifypwd.ModifyPwdActivity;
 import com.cb.passwdbox.database.SPUtils;
 import com.cb.passwdbox.property.Const;
 
 public class LoginActivity extends Activity {
-    private static final String TAG = "[pwdBox]login";
+    private static final String TAG = "LoginActivity";
 
     EditText pwdText;
-    TextView errorText;
-    Button commitBtn;
     SPUtils utils;
     Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         context = getApplicationContext();
         utils = new SPUtils(context);
         if(utils.isFirst()){
-            goFirstLoginActivity();
+            goModifyPwdActivity();
         }
-
         pwdText = (EditText) findViewById(R.id.pwd);
-        errorText = (TextView) findViewById(R.id.pwderr);
-        commitBtn = (Button) findViewById(R.id.commit);
-        errorText.setVisibility(View.INVISIBLE);
-        commitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String pwd = pwdText.getText().toString();
-                Log.d(TAG,"pwd = "+pwd);
-                int mode = utils.getLoginMode();
-                if(mode == Const.LOGIN_MODE_GRABLED){
-                    goMainActivity(pwd);
-                    return;
-                }else{
-                    int max = utils.getLoginTryMaxCount();
-                    int errCount = utils.getLoginWrongCount();
-                    if(errCount >= max) {
-                        PasswdManager manager = PasswdManager.getInstance(context);
-                        manager.deleteAllPasswd();
-                        manager = null;
-                    }
-                }
-                boolean right = utils.isPasswdRight(pwd);
-                Log.d(TAG,"pwd right = "+right);
-                if(right){
-                    utils.saveLoginWrongCount(0);
-                    goMainActivity(pwd);
-                }else{
-                    pwdText.setText("");
-                    errorText.setVisibility(View.VISIBLE);
-                    doPwdError();
-                }
-            }
-        });
     }
 
-    private void goFirstLoginActivity(){
+    public void onBtnClick(View view) {
+        String pwd = pwdText.getText().toString();
+        Log.d(TAG,"pwd = "+pwd);
+        int mode = utils.getLoginMode();
+        if(mode == Const.LOGIN_MODE_GRABLED){
+            goMainActivity(pwd);
+            return;
+        }else{
+            int max = utils.getLoginTryMaxCount();
+            int errCount = utils.getLoginWrongCount();
+            if(errCount >= max) {
+                PasswdManager manager = PasswdManager.getInstance(context);
+                manager.deleteAllPasswd();
+                manager = null;
+            }
+        }
+        boolean right = utils.isPasswdRight(pwd);
+        Log.d(TAG,"pwd right = "+right);
+        if(right){
+            utils.saveLoginWrongCount(0);
+            goMainActivity(pwd);
+        }else{
+            pwdText.setText("");
+            showMsg(getApplicationContext().getString(R.string.login_pwderror));
+            doPwdError();
+        }
+    }
+
+    public void showMsg(String msg){
+        Snackbar snackbar = Snackbar.make(LoginActivity.this.getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
+
+    private void goModifyPwdActivity(){
         Intent intent = new Intent();
-        intent.setClass(context,FirstLoginActivity.class);
+        intent.setClass(context, ModifyPwdActivity.class);
         startActivity(intent);
     }
 

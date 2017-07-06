@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.cb.passwdbox.database.SQLUtils;
 import com.cb.passwdbox.property.Const;
+import com.cb.passwdbox.type.TypeBeen;
 import com.cb.passwdbox.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class TypeManager {
         if(cursor.moveToNext()){
             String id = cursor.getString(0);
             String name = cursor.getString(1);
-            list.add(new TypeBeen(name, id));
+            list.add(new TypeBeen(id, name, name+"descriptor"));
         }
         return list;
     }

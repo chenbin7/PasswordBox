@@ -10,9 +10,8 @@
     <string name="login_lablepwddefault">请在此输入密码</string>
 
     //set_login_pwd
-    <string name="set_title">请设置密码</string>
-    <string name="set_lable_new_pwd">密码：</string>
-    <string name="set_lable_check_pwd">确认密码：</string>
+    <string name="set_lable_new_pwd">新密码</string>
+    <string name="set_lable_check_pwd">确认密码</string>
     <string name="set_check_error">密码不一致！请重新输入！</string>
 
     //change_login_pwd
