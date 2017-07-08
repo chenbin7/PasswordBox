@@ -7,36 +7,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cb.passwdbox.R;
-import com.cb.passwdbox.activity.AddPwdActivity;
 import com.cb.passwdbox.activity.AddTypeActivity;
 import com.cb.passwdbox.activity.SettingActivity;
-import com.cb.passwdbox.been.PasswdBeen;
-import com.cb.passwdbox.database.SPUtils;
-import com.cb.passwdbox.presenter.MainPresenter;
-import com.cb.passwdbox.presenter.PresenterFactory;
+import com.cb.passwdbox.greendao.DBHelper;
+import com.cb.passwdbox.greendao.model.PwdType;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "[pwdBox]main";
+public class PwdTypeActivity extends AppCompatActivity {
+    private static final String TAG = "PwdTypeActivity";
 
     Toolbar mToolbar;
     RecyclerView pwdListView;
-    SPUtils utils;
     Context context;
-    MainPresenter presenter;
     private static final int REQUEST_CODE_ADD_TYPE = 1;
     private static final int REQUEST_CODE_ADD_PWD = 2;
     private static final int REQUEST_CODE_SETTING = 3;
@@ -55,14 +49,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void doAddType() {
+        Log.d(TAG, "doAddType: ");
         Intent intent = new Intent();
-        intent.setClass(MainActivity.this,AddTypeActivity.class);
+        intent.setClass(PwdTypeActivity.this,AddTypeActivity.class);
         startActivityForResult(intent,REQUEST_CODE_ADD_TYPE);
     }
 
     public void goSetting(){
+        Log.d(TAG, "goSetting: ");
         Intent intent = new Intent();
-        intent.setClass(MainActivity.this,SettingActivity.class);
+        intent.setClass(PwdTypeActivity.this,SettingActivity.class);
         startActivityForResult(intent,REQUEST_CODE_SETTING);
     }
 
@@ -99,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
-        presenter = (MainPresenter) PresenterFactory.createPresenter(MainPresenter.class,this);
-        List<TypeBeen> list = presenter.initType();
+        List<PwdType> list = DBHelper.getInstance(getApplicationContext()).getTypes();
         pwdListView.setLayoutManager(new LinearLayoutManager(this));
         pwdListView.setAdapter(new PwdAdapter(list,this));
     }
@@ -108,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
     //List
     class PwdAdapter extends RecyclerView.Adapter<PwdViewHolder>{
 
-        List<TypeBeen> list;
+        List<PwdType> list;
         Context context;
-        public PwdAdapter(List<TypeBeen> list,Context context){
+        public PwdAdapter(List<PwdType> list, Context context){
             this.list = list;
             this.context = context;
         }
@@ -122,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(PwdViewHolder holder, int position) {
-            TypeBeen bean = list.get(position);
+            PwdType bean = list.get(position);
             holder.name.setText(bean.getName());
             holder.pwd.setText(bean.getDescriptor());
         }

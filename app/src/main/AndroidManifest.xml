@@ -15,7 +15,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".modifypwd.ModifyPwdActivity"/>
-        <activity android:name=".type.MainActivity"/>
+        <activity android:name=".type.PwdTypeActivity"/>
         <activity android:name=".activity.AddTypeActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.AddPwdActivity"/>

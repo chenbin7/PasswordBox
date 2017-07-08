@@ -13,8 +13,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.cb.passwdbox.R;
-import com.cb.passwdbox.type.MainActivity;
-import com.cb.passwdbox.been.PasswdManager;
+import com.cb.passwdbox.type.PwdTypeActivity;
 import com.cb.passwdbox.modifypwd.ModifyPwdActivity;
 import com.cb.passwdbox.database.SPUtils;
 import com.cb.passwdbox.property.Const;
@@ -49,9 +48,7 @@ public class LoginActivity extends Activity {
             int max = utils.getLoginTryMaxCount();
             int errCount = utils.getLoginWrongCount();
             if(errCount >= max) {
-                PasswdManager manager = PasswdManager.getInstance(context);
-                manager.deleteAllPasswd();
-                manager = null;
+                //TODO
             }
         }
         boolean right = utils.isPasswdRight(pwd);
@@ -80,7 +77,7 @@ public class LoginActivity extends Activity {
     private void goMainActivity(String pwd){
         Intent intent = new Intent();
         intent.putExtra("pwd",pwd);
-        intent.setClass(context,MainActivity.class);
+        intent.setClass(context,PwdTypeActivity.class);
         startActivity(intent);
     }
 
@@ -96,9 +93,7 @@ public class LoginActivity extends Activity {
             builder.setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    PasswdManager manager = PasswdManager.getInstance(context);
-                    manager.deleteAllPasswd();
-                    manager = null;
+                    //TODO
                 }
             });
             builder.create().show();
@@ -113,6 +108,7 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     Log.i(TAG,"login err: times = "+times);
+                    //TODO
                 }
             });
             builder.create().show();

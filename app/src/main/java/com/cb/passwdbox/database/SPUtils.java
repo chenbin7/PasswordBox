@@ -10,12 +10,10 @@ import android.util.Log;
 
 public class SPUtils {
 
-	private final static String TAG = "[passwd]LoginUtils";
-	private Context context = null;
+	private final static String TAG = "SPUtils";
 	private SharedPreferences share = null;
 	
 	public SPUtils(Context context){
-		this.context = context;
 		this.share = context.getSharedPreferences(Const.SHARE_PREFERENCE_NAME, 0);
 	}
 
