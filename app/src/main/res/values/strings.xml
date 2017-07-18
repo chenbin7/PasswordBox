@@ -23,8 +23,8 @@
     <string name="change_check_error">密码不一致！请重新输入！</string>
 
     //add_type
-    <string name="type_add_title">新建密码类</string>
-    <string name="type_add_name">名称：</string>
+    <string name="type_add_name">请输入新建密码类</string>
+    <string name="type_add_desc">请输入描述信息</string>
 
     //add_pwd
     <string name="pwd_add_title">新增密码</string>

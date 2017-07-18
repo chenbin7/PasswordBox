@@ -10,6 +10,7 @@ import com.cb.passwdbox.greendao.db.PwdTypeDao;
 import com.cb.passwdbox.greendao.model.Password;
 import com.cb.passwdbox.greendao.model.PwdType;
 import com.cb.passwdbox.property.Const;
+import com.cb.passwdbox.utils.Utils;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class DBHelper {
     private DaoSession mSession;
     private PwdTypeDao mTypeDao;
     private PasswordDao mPasswdDao;
-    private long mDefultTypeId = 0;
+    private String mDefultTypeId = null;
 
     public synchronized static DBHelper getInstance(Context context) {
         if (sDBHelper == null) {
@@ -42,6 +43,10 @@ public class DBHelper {
         mSession = mMaster.newSession();
         mTypeDao = mSession.getPwdTypeDao();
         mPasswdDao = mSession.getPasswordDao();
+        getDefulatTypeId();
+    }
+
+    private void getDefulatTypeId(){
         List<PwdType> list = mTypeDao.queryBuilder().where(PwdTypeDao.Properties.Name.eq(Const.DEFAULT_TYPE_NAME)).orderAsc(PwdTypeDao.Properties.Id).list();
         if(list != null && list.size() > 0){
             mDefultTypeId = list.get(0).getId();
@@ -52,7 +57,7 @@ public class DBHelper {
                 mDefultTypeId = list.get(0).getId();
             } else {
                 Log.e(TAG, "DBHelper: can't get the defult type");
-                mDefultTypeId = -1;
+                mDefultTypeId = null;
             }
         }
     }
@@ -61,6 +66,7 @@ public class DBHelper {
         PwdType type = new PwdType();
         type.setName(Const.DEFAULT_TYPE_NAME);
         type.setDescriptor("未分类密码");
+        type.setId(Utils.getUUID());
         insertType(type);
     }
 
@@ -88,7 +94,7 @@ public class DBHelper {
         List<Password> pwds = getPasswdByType(type);
         Log.w(TAG, "deleteTypeOnly: "+pwds );
         if(pwds != null){
-            if(keepPwd && mDefultTypeId < 0){
+            if(keepPwd && mDefultTypeId != null){
                 for (Password pwd : pwds) {
                     pwd.setTypeId(mDefultTypeId);
                     updatePasswd(pwd);
@@ -135,4 +141,9 @@ public class DBHelper {
     }
 
 
+    public void clear() {
+        mTypeDao.deleteAll();
+        mPasswdDao.deleteAll();
+        getDefulatTypeId();
+    }
 }

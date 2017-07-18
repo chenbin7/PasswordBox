@@ -3,11 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/background_color"
+    android:background="@drawable/background_main"
     tools:context=".login.LoginActivity">
 
     <View
@@ -37,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/login_base"
         android:layout_marginTop="10dp"
-        android:background="@drawable/login_btn_selector"
+        android:background="@drawable/selector_login_btn"
         android:text="@string/btn_commit"
         android:onClick="onBtnClick"
         />

@@ -8,31 +8,29 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cb.passwdbox.R;
-import com.cb.passwdbox.activity.AddTypeActivity;
 import com.cb.passwdbox.activity.SettingActivity;
 import com.cb.passwdbox.greendao.DBHelper;
 import com.cb.passwdbox.greendao.model.PwdType;
 
 import java.util.List;
 
-public class PwdTypeActivity extends AppCompatActivity {
-    private static final String TAG = "PwdTypeActivity";
+public class TypeActivity extends AppCompatActivity {
+    private static final String TAG = "TypeActivity";
 
     Toolbar mToolbar;
-    RecyclerView pwdListView;
+    RecyclerView typeListView;
     Context context;
+    List<PwdType> list;
+    TypeAdaptor adaptor;
+
     private static final int REQUEST_CODE_ADD_TYPE = 1;
-    private static final int REQUEST_CODE_ADD_PWD = 2;
+//    private static final int REQUEST_CODE_ADD_PWD = 2;
     private static final int REQUEST_CODE_SETTING = 3;
 
 //    List<String> type;
@@ -40,25 +38,33 @@ public class PwdTypeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_type);
         context = getApplicationContext();
         mToolbar = (Toolbar) findViewById(R.id.type_toolbar);
         initToolbar();
-        pwdListView = (RecyclerView) findViewById(R.id.list_pwd);
+        typeListView = (RecyclerView) findViewById(R.id.list_pwd);
         init();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        list = DBHelper.getInstance(getApplicationContext()).getTypes();
+        adaptor.setList(list);
+        typeListView.setAdapter(adaptor);
     }
 
     public void doAddType() {
         Log.d(TAG, "doAddType: ");
         Intent intent = new Intent();
-        intent.setClass(PwdTypeActivity.this,AddTypeActivity.class);
+        intent.setClass(TypeActivity.this,AddTypeActivity.class);
         startActivityForResult(intent,REQUEST_CODE_ADD_TYPE);
     }
 
     public void goSetting(){
         Log.d(TAG, "goSetting: ");
         Intent intent = new Intent();
-        intent.setClass(PwdTypeActivity.this,SettingActivity.class);
+        intent.setClass(TypeActivity.this,SettingActivity.class);
         startActivityForResult(intent,REQUEST_CODE_SETTING);
     }
 
@@ -95,51 +101,12 @@ public class PwdTypeActivity extends AppCompatActivity {
     }
 
     private void init(){
-        List<PwdType> list = DBHelper.getInstance(getApplicationContext()).getTypes();
-        pwdListView.setLayoutManager(new LinearLayoutManager(this));
-        pwdListView.setAdapter(new PwdAdapter(list,this));
+        list = DBHelper.getInstance(getApplicationContext()).getTypes();
+        typeListView.setLayoutManager(new LinearLayoutManager(this));
+        adaptor = new TypeAdaptor(list,this);
+        adaptor.setBtnWidth(getApplicationContext().getResources().getDimension(R.dimen.list_item_btn_width));
     }
 
-    //List
-    class PwdAdapter extends RecyclerView.Adapter<PwdViewHolder>{
-
-        List<PwdType> list;
-        Context context;
-        public PwdAdapter(List<PwdType> list, Context context){
-            this.list = list;
-            this.context = context;
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
-
-        @Override
-        public void onBindViewHolder(PwdViewHolder holder, int position) {
-            PwdType bean = list.get(position);
-            holder.name.setText(bean.getName());
-            holder.pwd.setText(bean.getDescriptor());
-        }
-
-        @Override
-        public PwdViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.list_type_view,parent,false);
-            PwdViewHolder holder = new PwdViewHolder(view);
-            return holder;
-        }
-    }
-
-    class PwdViewHolder extends RecyclerView.ViewHolder {
-
-        TextView name,pwd;
-
-        public PwdViewHolder(View view) {
-            super(view);
-            name = (TextView) view.findViewById(R.id.type_name);
-            pwd = (TextView) view.findViewById(R.id.type_descriptor);
-        }
-    }
 
 }
 

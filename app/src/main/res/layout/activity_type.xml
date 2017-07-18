@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".type.PwdTypeActivity">
+    android:background="@drawable/background_main"
+    tools:context=".type.TypeActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/type_toolbar"
@@ -24,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/line"
-        android:layout_marginLeft="@dimen/main_margin_lr"
-        android:layout_marginRight="@dimen/main_margin_lr" />
+        />
 
 </RelativeLayout>

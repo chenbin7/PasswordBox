@@ -54,6 +54,6 @@
     <dimen name="clear_all_pwd_left_margin">15dp</dimen>
     <dimen name="clear_all_btn_bottom_margin">20dp</dimen>
 
-    //main
-    <dimen name="main_margin_lr">10dp</dimen>
+    //type
+    <dimen name="list_item_btn_width">50dp</dimen>
 </resources>

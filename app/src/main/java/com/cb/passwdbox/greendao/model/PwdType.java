@@ -8,8 +8,8 @@ import org.greenrobot.greendao.annotation.NotNull;
 @Entity
 public class PwdType {
 
-	@Id(autoincrement = true)
-	private long id;
+	@Id
+	private String id;
 	@NotNull
 	private String name;
 	private String descriptor;
@@ -18,18 +18,18 @@ public class PwdType {
 	public PwdType() {
 	}
 
-	@Generated(hash = 522542111)
-	public PwdType(long id, @NotNull String name, String descriptor) {
+	@Generated(hash = 1837887992)
+	public PwdType(String id, @NotNull String name, String descriptor) {
 		this.id = id;
 		this.name = name;
 		this.descriptor = descriptor;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -10,10 +10,12 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.cb.passwdbox.R;
-import com.cb.passwdbox.type.PwdTypeActivity;
+import com.cb.passwdbox.greendao.DBHelper;
+import com.cb.passwdbox.type.TypeActivity;
 import com.cb.passwdbox.modifypwd.ModifyPwdActivity;
 import com.cb.passwdbox.database.SPUtils;
 import com.cb.passwdbox.property.Const;
@@ -40,6 +42,8 @@ public class LoginActivity extends Activity {
     public void onBtnClick(View view) {
         String pwd = pwdText.getText().toString();
         Log.d(TAG,"pwd = "+pwd);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         int mode = utils.getLoginMode();
         if(mode == Const.LOGIN_MODE_GRABLED){
             goMainActivity(pwd);
@@ -48,7 +52,8 @@ public class LoginActivity extends Activity {
             int max = utils.getLoginTryMaxCount();
             int errCount = utils.getLoginWrongCount();
             if(errCount >= max) {
-                //TODO
+                doPwdError();
+                return;
             }
         }
         boolean right = utils.isPasswdRight(pwd);
@@ -58,13 +63,14 @@ public class LoginActivity extends Activity {
             goMainActivity(pwd);
         }else{
             pwdText.setText("");
-            showMsg(getApplicationContext().getString(R.string.login_pwderror));
-            doPwdError();
+            if(!doPwdError()) {
+                showMsg(view, getApplicationContext().getString(R.string.login_pwderror));
+            }
         }
     }
 
-    public void showMsg(String msg){
-        Snackbar snackbar = Snackbar.make(LoginActivity.this.getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT);
+    public void showMsg(View view, String msg){
+        Snackbar snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 
@@ -77,14 +83,15 @@ public class LoginActivity extends Activity {
     private void goMainActivity(String pwd){
         Intent intent = new Intent();
         intent.putExtra("pwd",pwd);
-        intent.setClass(context,PwdTypeActivity.class);
+        intent.setClass(context,TypeActivity.class);
         startActivity(intent);
     }
 
-    private void doPwdError(){
+    private boolean doPwdError(){
         int max = utils.getLoginTryMaxCount();
         int errCount = utils.getLoginWrongCount();
         ++errCount;
+        utils.saveLoginWrongCount(errCount);
         Log.d(TAG,"doPwdError   max = "+max+"   errcount = "+errCount);
         if(errCount >= max){
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -93,11 +100,12 @@ public class LoginActivity extends Activity {
             builder.setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    //TODO
+                    DBHelper.getInstance(null).clear();
+                    utils.saveLoginWrongCount(0);
                 }
             });
             builder.create().show();
-            return;
+            return true;
         }
         final int times = max - errCount;
         if(times <= 3){
@@ -112,8 +120,9 @@ public class LoginActivity extends Activity {
                 }
             });
             builder.create().show();
+            return true;
         }
-        utils.saveLoginWrongCount(errCount);
+        return false;
     }
 
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.cb.passwdbox.R;
@@ -35,20 +36,21 @@ public class ModifyPwdActivity extends AppCompatActivity {
         String pwd = pwdText.getText().toString();
         String check = checkText.getText().toString();
         Log.d(TAG,"pwd = "+pwd+"    check = "+check);
-
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         if(pwd.equals(check)){
             SPUtils utils = new SPUtils(context);
             utils.savePasswd(pwd);
             ModifyPwdActivity.this.finish();
         }else {
-            showMsg(getApplicationContext().getString(R.string.set_check_error));
+            showMsg(view, getApplicationContext().getString(R.string.set_check_error));
             pwdText.setText("");
             checkText.setText("");
         }
     }
 
-    public void showMsg(String msg){
-        Snackbar snackbar = Snackbar.make(ModifyPwdActivity.this.getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT);
+    public void showMsg(View view, String msg){
+        Snackbar snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 

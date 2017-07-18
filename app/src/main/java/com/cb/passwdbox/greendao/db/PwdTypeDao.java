@@ -15,7 +15,7 @@ import com.cb.passwdbox.greendao.model.PwdType;
 /** 
  * DAO for table "PWD_TYPE".
 */
-public class PwdTypeDao extends AbstractDao<PwdType, Long> {
+public class PwdTypeDao extends AbstractDao<PwdType, String> {
 
     public static final String TABLENAME = "PWD_TYPE";
 
@@ -24,7 +24,7 @@ public class PwdTypeDao extends AbstractDao<PwdType, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, String.class, "id", true, "ID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Descriptor = new Property(2, String.class, "descriptor", false, "DESCRIPTOR");
     }
@@ -42,7 +42,7 @@ public class PwdTypeDao extends AbstractDao<PwdType, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PWD_TYPE\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
                 "\"DESCRIPTOR\" TEXT);"); // 2: descriptor
     }
@@ -56,7 +56,11 @@ public class PwdTypeDao extends AbstractDao<PwdType, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, PwdType entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        String id = entity.getId();
+        if (id != null) {
+            stmt.bindString(1, id);
+        }
         stmt.bindString(2, entity.getName());
  
         String descriptor = entity.getDescriptor();
@@ -68,7 +72,11 @@ public class PwdTypeDao extends AbstractDao<PwdType, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, PwdType entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        String id = entity.getId();
+        if (id != null) {
+            stmt.bindString(1, id);
+        }
         stmt.bindString(2, entity.getName());
  
         String descriptor = entity.getDescriptor();
@@ -78,14 +86,14 @@ public class PwdTypeDao extends AbstractDao<PwdType, Long> {
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
     }    
 
     @Override
     public PwdType readEntity(Cursor cursor, int offset) {
         PwdType entity = new PwdType( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
             cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // descriptor
         );
@@ -94,19 +102,18 @@ public class PwdTypeDao extends AbstractDao<PwdType, Long> {
      
     @Override
     public void readEntity(Cursor cursor, PwdType entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setDescriptor(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(PwdType entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final String updateKeyAfterInsert(PwdType entity, long rowId) {
+        return entity.getId();
     }
     
     @Override
-    public Long getKey(PwdType entity) {
+    public String getKey(PwdType entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -116,7 +123,7 @@ public class PwdTypeDao extends AbstractDao<PwdType, Long> {
 
     @Override
     public boolean hasKey(PwdType entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

@@ -9,14 +9,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".login.LoginActivity">
+
+        </activity>
+        <activity android:name=".modifypwd.ModifyPwdActivity"/>
+        <activity android:name=".type.TypeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".modifypwd.ModifyPwdActivity"/>
-        <activity android:name=".type.PwdTypeActivity"/>
-        <activity android:name=".activity.AddTypeActivity"/>
+            </activity>
+        <activity android:name=".type.AddTypeActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.AddPwdActivity"/>
     </application>

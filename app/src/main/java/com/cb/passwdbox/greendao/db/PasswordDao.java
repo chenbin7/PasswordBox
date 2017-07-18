@@ -1,18 +1,13 @@
 package com.cb.passwdbox.greendao.db;
 
-import java.util.List;
-import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.Property;
-import org.greenrobot.greendao.internal.SqlUtils;
 import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
-
-import com.cb.passwdbox.greendao.model.PwdType;
 
 import com.cb.passwdbox.greendao.model.Password;
 
@@ -20,7 +15,7 @@ import com.cb.passwdbox.greendao.model.Password;
 /** 
  * DAO for table "PASSWORD".
 */
-public class PasswordDao extends AbstractDao<Password, Long> {
+public class PasswordDao extends AbstractDao<Password, String> {
 
     public static final String TABLENAME = "PASSWORD";
 
@@ -29,13 +24,11 @@ public class PasswordDao extends AbstractDao<Password, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, String.class, "id", true, "ID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Passwd = new Property(2, String.class, "passwd", false, "PASSWD");
-        public final static Property TypeId = new Property(3, long.class, "typeId", false, "TYPE_ID");
+        public final static Property TypeId = new Property(3, String.class, "typeId", false, "TYPE_ID");
     }
-
-    private DaoSession daoSession;
 
 
     public PasswordDao(DaoConfig config) {
@@ -44,17 +37,16 @@ public class PasswordDao extends AbstractDao<Password, Long> {
     
     public PasswordDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
-        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PASSWORD\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
                 "\"PASSWD\" TEXT NOT NULL ," + // 2: passwd
-                "\"TYPE_ID\" INTEGER NOT NULL );"); // 3: typeId
+                "\"TYPE_ID\" TEXT);"); // 3: typeId
     }
 
     /** Drops the underlying database table. */
@@ -66,59 +58,68 @@ public class PasswordDao extends AbstractDao<Password, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Password entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        String id = entity.getId();
+        if (id != null) {
+            stmt.bindString(1, id);
+        }
         stmt.bindString(2, entity.getName());
         stmt.bindString(3, entity.getPasswd());
-        stmt.bindLong(4, entity.getTypeId());
+ 
+        String typeId = entity.getTypeId();
+        if (typeId != null) {
+            stmt.bindString(4, typeId);
+        }
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, Password entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        String id = entity.getId();
+        if (id != null) {
+            stmt.bindString(1, id);
+        }
         stmt.bindString(2, entity.getName());
         stmt.bindString(3, entity.getPasswd());
-        stmt.bindLong(4, entity.getTypeId());
+ 
+        String typeId = entity.getTypeId();
+        if (typeId != null) {
+            stmt.bindString(4, typeId);
+        }
     }
 
     @Override
-    protected final void attachEntity(Password entity) {
-        super.attachEntity(entity);
-        entity.__setDaoSession(daoSession);
-    }
-
-    @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
     }    
 
     @Override
     public Password readEntity(Cursor cursor, int offset) {
         Password entity = new Password( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
             cursor.getString(offset + 1), // name
             cursor.getString(offset + 2), // passwd
-            cursor.getLong(offset + 3) // typeId
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // typeId
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Password entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setPasswd(cursor.getString(offset + 2));
-        entity.setTypeId(cursor.getLong(offset + 3));
+        entity.setTypeId(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(Password entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final String updateKeyAfterInsert(Password entity, long rowId) {
+        return entity.getId();
     }
     
     @Override
-    public Long getKey(Password entity) {
+    public String getKey(Password entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -128,7 +129,7 @@ public class PasswordDao extends AbstractDao<Password, Long> {
 
     @Override
     public boolean hasKey(Password entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override
@@ -136,97 +137,4 @@ public class PasswordDao extends AbstractDao<Password, Long> {
         return true;
     }
     
-    private String selectDeep;
-
-    protected String getSelectDeep() {
-        if (selectDeep == null) {
-            StringBuilder builder = new StringBuilder("SELECT ");
-            SqlUtils.appendColumns(builder, "T", getAllColumns());
-            builder.append(',');
-            SqlUtils.appendColumns(builder, "T0", daoSession.getPwdTypeDao().getAllColumns());
-            builder.append(" FROM PASSWORD T");
-            builder.append(" LEFT JOIN PWD_TYPE T0 ON T.\"TYPE_ID\"=T0.\"_id\"");
-            builder.append(' ');
-            selectDeep = builder.toString();
-        }
-        return selectDeep;
-    }
-    
-    protected Password loadCurrentDeep(Cursor cursor, boolean lock) {
-        Password entity = loadCurrent(cursor, 0, lock);
-        int offset = getAllColumns().length;
-
-        PwdType mType = loadCurrentOther(daoSession.getPwdTypeDao(), cursor, offset);
-         if(mType != null) {
-            entity.setMType(mType);
-        }
-
-        return entity;    
-    }
-
-    public Password loadDeep(Long key) {
-        assertSinglePk();
-        if (key == null) {
-            return null;
-        }
-
-        StringBuilder builder = new StringBuilder(getSelectDeep());
-        builder.append("WHERE ");
-        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
-        String sql = builder.toString();
-        
-        String[] keyArray = new String[] { key.toString() };
-        Cursor cursor = db.rawQuery(sql, keyArray);
-        
-        try {
-            boolean available = cursor.moveToFirst();
-            if (!available) {
-                return null;
-            } else if (!cursor.isLast()) {
-                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
-            }
-            return loadCurrentDeep(cursor, true);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<Password> loadAllDeepFromCursor(Cursor cursor) {
-        int count = cursor.getCount();
-        List<Password> list = new ArrayList<Password>(count);
-        
-        if (cursor.moveToFirst()) {
-            if (identityScope != null) {
-                identityScope.lock();
-                identityScope.reserveRoom(count);
-            }
-            try {
-                do {
-                    list.add(loadCurrentDeep(cursor, false));
-                } while (cursor.moveToNext());
-            } finally {
-                if (identityScope != null) {
-                    identityScope.unlock();
-                }
-            }
-        }
-        return list;
-    }
-    
-    protected List<Password> loadDeepAllAndCloseCursor(Cursor cursor) {
-        try {
-            return loadAllDeepFromCursor(cursor);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-
-    /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<Password> queryDeep(String where, String... selectionArg) {
-        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
-        return loadDeepAllAndCloseCursor(cursor);
-    }
- 
 }
